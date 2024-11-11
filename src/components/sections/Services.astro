@@ -3,37 +3,65 @@ import Service from "../cards/Service.astro";
 import Container from "../shared/Container.astro";
 import Paragraph from "../shared/Paragraph.astro";
 import Title from "../shared/Title.astro";
-import { services } from "../../utils/data.ts";
 
+// Updated services data with blockchain-related services and icons
+const services = [
+  {
+    title: "Smart Contract Development",
+    description: "Custom smart contracts tailored to your business needs, ensuring security and efficiency.",
+    icon: "/icons/smart-contract.svg",
+  },
+  {
+    title: "Blockchain Consulting",
+    description: "Expert guidance to help you navigate the complexities of blockchain technology.",
+    icon: "/icons/consulting.svg",
+  },
+  {
+    title: "Decentralized Applications",
+    description: "Building scalable and robust DApps for various industries.",
+    icon: "/icons/dapp.svg",
+  },
+  {
+    title: "Compliance and Regulation",
+    description: "Ensuring your blockchain solutions meet all regulatory requirements.",
+    icon: "/icons/compliance.svg",
+  },
+  {
+    title: "Blockchain Integration",
+    description: "Seamless integration of blockchain technology into your existing systems.",
+    icon: "/icons/integration.svg",
+  },
+  {
+    title: "Tokenization Services",
+    description: "Tokenize assets for increased liquidity and accessibility.",
+    icon: "/icons/tokenization.svg",
+  },
+];
 
 type ServicesProps = {
     title: string;
     description: string;
-    icon: string
+    icon: string;
 };
-
 
 ---
 
 <section id="services">
-    <Container className="space-y-10 md:sapce-y-12">
+    <Container className="space-y-10 md:space-y-12">
+        <!-- Section Heading -->
         <div class="text-center max-w-3xl mx-auto space-y-4">
             <Title>
-                What we offer
+                Transform Your Business with Our Blockchain Services
             </Title>
             <Paragraph>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Unlock the potential of blockchain technology with our comprehensive suite of services designed to accelerate innovation and ensure compliance.
             </Paragraph>
         </div>
+        <!-- Services Grid -->
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {
-                    services.map((service: ServicesProps) => {
-                    return (
-                            <Service title={service.title} description={service.description} icon={service.icon}>
-                            </Service>
-                            );
-                    })
-            }
+            {services.map((service: ServicesProps) => (
+                <Service title={service.title} description={service.description} icon={service.icon} />
+            ))}
         </div>
     </Container>
 </section>

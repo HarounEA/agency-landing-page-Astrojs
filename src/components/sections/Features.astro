@@ -2,50 +2,76 @@
 import Container from "../shared/Container.astro";
 import Paragraph from "../shared/Paragraph.astro";
 import Title from "../shared/Title.astro";
-
 ---
 
 <section id="features">
     <Container className="flex flex-col midmd:flex-row gap-10 lg:gap-12">
-        
-        <div class="flex-1 flex midmd:w-7/12 lg:w-1/2 flex-col">
-            <Title>
-                We provide Important Features for Digital Marketing
-            </Title>
-            <Paragraph className="mt-8">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                <br> 
-                Minus, saepe aliquid autem alias vero distinctio dignissimos consequatur?
-            </Paragraph>
-            <Paragraph className="mt-2">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus, saepe aliquid autem alias vero distinctio dignissimos consequatur?
-            </Paragraph>
-            <ul class="mt-8 space-y-4 text-heading-3 font-medium">
-                <li>
-                    <span class="font-bold bg-box-bg rounded-full w-8 h-8 mr-3 text-primary inline-flex justify-center items-center">&checkmark;</span> Web site Analysis
-                </li>
-                <li>
-                    <span class="font-bold bg-box-bg rounded-full w-8 h-8 mr-3 text-primary inline-flex justify-center items-center">&checkmark;</span> Free optimazation.
-                </li>
-                <li>
-                    <span class="font-bold bg-box-bg rounded-full w-8 h-8 mr-3 text-primary inline-flex justify-center items-center">&checkmark;</span> Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                </li>
-                <li>
-                    <span class="font-bold bg-box-bg rounded-full w-8 h-8 mr-3 text-primary inline-flex justify-center items-center">&checkmark;</span> Content Optimization.
-                </li>
-            </ul>
+        <!-- Left Column: Image -->
+        <div class="max-w-md mx-auto midmd:max-w-none lg:mx-0 lg:pr-10 xl:pr-2 flex-1 flex w-11/12 midmd:w-5/12 lg:w-1/2 midmd:h-auto">
+            <div class="w-full h-80 sm:h-96 midmd:h-full relative">
+                <!-- Updated decorative elements -->
+                <div class="absolute rotate-45 -left-5 md:-left-10 lg:-left-20 xl:-left-24 p-1 top-1/2 w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 blur-3xl opacity-50 animate-pulse"></div>
+                <div class="absolute p-1 -top-4 md:-top-10 right-0 w-20 h-20 bg-gradient-to-br from-green-500 to-teal-500 rounded-full blur-3xl opacity-60 animate-pulse"></div>
+                
+                <span class="absolute w-full aspect-[16/5] -skew-x-12 rounded-full bg-gradient-to-tr from-indigo-500 to-blue-500 opacity-40 blur-2xl left-0 bottom-0"></span>
+                <!-- Updated image -->
+                <img src={"/images/blockchain-features.webp"} alt="Blockchain features illustration" 
+                width="1240" height="1385"
+                class="w-auto left-1/2 -translate-x-1/2 absolute bottom-0 max-h-full" />
+            </div>
         </div>
 
-        <div class="max-w-md mx-auto midmd:max-w-none lg:mx-0  lg:pr-10 xl:pr-2 flex-1 flex w-11/12 midmd:w-5/12 lg:w-1/2 midmd:h-auto">
-            <div class="w-full h-80 sm:h-96 midmd:h-full relative">
-                <div class="absolute rotate-45 -left-5 md:-left-10 lg:-left-20 xl:-left-24 p-1 top-1/2 w-16 h-16 bg-gradient-to-br from-primary to-orange-400 blur-3xl opacity-50"></div>
-                <div class="absolute  p-1 -top-4 md:-top-10 right-0 w-20 h-20 bg-gradient-to-br from-primary to-orange-400 rounded-full blur-3xl opacity-60"></div>
-                
-                <span class="absolute w-full aspect-[16/5] -skew-x-12 rounded-full bg-gradient-to-tr from-primary to-green-400 opacity-40 blur-2xl left-0 bottom-0"></span>
-                <img src={"/images/dev-with-c.webp"} alt="banner image" 
-                width="1240" height="1385"
-                class=" w-auto left-1/2 -translate-x-1/2 absolute bottom-0 max-h-full" />
-            </div>
+        <!-- Right Column: Content -->
+        <div class="flex-1 flex midmd:w-7/12 lg:w-1/2 flex-col">
+            <Title>
+                Unlock Powerful Features for Blockchain Innovation
+            </Title>
+            <Paragraph className="mt-8">
+                At <strong>BlockReg Solutions</strong>, we offer cutting-edge features to empower your blockchain projects.
+                <br>
+                Harness the power of decentralized technology with our comprehensive suite of tools and services.
+            </Paragraph>
+            <Paragraph className="mt-2">
+                Our solutions are designed to streamline development, enhance security, and ensure compliance, so you can focus on innovation.
+            </Paragraph>
+            <ul class="mt-8 space-y-6 text-heading-3 font-medium">
+                <li class="flex items-center">
+                    <span class="font-bold bg-blue-500 rounded-full w-10 h-10 mr-4 text-white inline-flex justify-center items-center">
+                        <!-- Smart Contract Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17v-1a4 4 0 00-3-3.874V9a4 4 0 00-4-4H7a4 4 0 00-4 4v7a4 4 0 004 4h6a4 4 0 004-4z" />
+                        </svg>
+                    </span> 
+                    Smart Contract Development
+                </li>
+                <li class="flex items-center">
+                    <span class="font-bold bg-green-500 rounded-full w-10 h-10 mr-4 text-white inline-flex justify-center items-center">
+                        <!-- Security Shield Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12l8-4.5-8-4.5-8 4.5 8 4.5zm0 0v8.25M12 20.25l8-4.5m-8 4.5l-8-4.5" />
+                        </svg>
+                    </span> 
+                    Enhanced Security Protocols
+                </li>
+                <li class="flex items-center">
+                    <span class="font-bold bg-purple-500 rounded-full w-10 h-10 mr-4 text-white inline-flex justify-center items-center">
+                        <!-- Compliance Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l2 2 4-4M7 10a5 5 0 0110 0v7a2 2 0 01-2 2H9a2 2 0 01-2-2v-7z" />
+                        </svg>
+                    </span> 
+                    Regulatory Compliance Tools
+                </li>
+                <li class="flex items-center">
+                    <span class="font-bold bg-indigo-500 rounded-full w-10 h-10 mr-4 text-white inline-flex justify-center items-center">
+                        <!-- Analytics Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-5l-2 2m7-2l2 2v5M5 12l2-2 4 4 4-4 4 4" />
+                        </svg>
+                    </span> 
+                    Blockchain Analytics
+                </li>
+            </ul>
         </div>
     </Container>
 </section>
