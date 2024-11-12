@@ -1,47 +1,251 @@
 ---
 import Container from "../shared/Container.astro";
+import { onMount } from 'solid-js';
 ---
 
-<section class="relative mt-12 md:mt-16">
+<section class="relative mt-12 md:mt-16 overflow-hidden">
   <Container>
+    <!-- Animated Background -->
+    <div class="absolute inset-0 -z-10">
+      <canvas id="backgroundCanvas" class="w-full h-full"></canvas>
+    </div>
+
+    <!-- Statistics Section -->
     <div
-      class="mx-auto lg:mx-0 p-5 sm:p-6 py-6 sm:py-8 max-w-5xl rounded-3xl bg-box-bg border border-box-border shadow-lg  shadow-box-shadow md:divide-x divide-box-border grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 md:gap-6 lg:gap-12"
+      class="mx-auto lg:mx-0 p-8 sm:p-10 py-10 sm:py-12 max-w-5xl rounded-3xl bg-gradient-to-br from-blue-900 via-gray-900 to-black border border-gray-700 shadow-2xl relative overflow-hidden"
     >
-      <div class="text-center">
-        <h2
-          class="font-semibold text-xl sm:text-2xl md:text-4xl text-heading-1"
-        >
-          12+
-        </h2>
-        <p class="mt-2 text-heading-3">Created projects</p>
-      </div>
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <!-- Stat Item 1 -->
+        <div class="text-center group">
+          <div class="relative inline-block">
+            <h2
+              class="font-bold text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-br from-green-400 to-blue-500 group-hover:from-blue-500 group-hover:to-green-400 transition duration-500"
+            >
+              <span class="counter" data-target="3">0</span>
+            </h2>
+            <div
+              class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500"
+            >
+              <!-- Article Icon -->
+              <svg
+                class="w-16 h-16 text-green-500 animate-pulse"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M19 21H5a2 2 0 01-2-2V7a2 2 0 012-2h5l2 2h7a2 2 0 012 2v10a2 2 0 01-2 2z"
+                />
+              </svg>
+            </div>
+          </div>
+          <p
+            class="mt-4 text-lg text-gray-300 group-hover:text-white transition duration-500"
+          >
+            Published Articles on Blockchain Regulation
+          </p>
+        </div>
 
-      <div class="text-center">
-        <h2
-          class="font-semibold text-xl sm:text-2xl md:text-4xl text-heading-1"
-        >
-          200+
-        </h2>
-        <p class="mt-2 text-heading-3">Projects</p>
-      </div>
+        <!-- Stat Item 2 -->
+        <div class="text-center group">
+          <div class="relative inline-block">
+            <h2
+              class="font-bold text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-br from-purple-400 to-pink-500 group-hover:from-pink-500 group-hover:to-purple-400 transition duration-500"
+            >
+              <span class="counter" data-target="1">0</span><sup>st</sup>
+            </h2>
+            <div
+              class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500"
+            >
+              <!-- Trophy Icon -->
+              <svg
+                class="w-16 h-16 text-pink-500 animate-pulse"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M8 21h8M12 17v4M7 7h10l1 7H6l1-7z"
+                />
+              </svg>
+            </div>
+          </div>
+          <p
+            class="mt-4 text-lg text-gray-300 group-hover:text-white transition duration-500"
+          >
+            Regulatory Blockchain-as-a-Service in Morocco
+          </p>
+        </div>
 
-      <div class="text-center">
-        <h2
-          class="font-semibold text-xl sm:text-2xl md:text-4xl text-heading-1"
-        >
-          120
-        </h2>
-        <p class="mt-2 text-heading-3">Happy Client</p>
-      </div>
+        <!-- Stat Item 3 -->
+        <div class="text-center group">
+          <div class="relative inline-block">
+            <h2
+              class="font-bold text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-br from-yellow-400 to-red-500 group-hover:from-red-500 group-hover:to-yellow-400 transition duration-500"
+            >
+              <span class="counter" data-target="3">0</span>
+            </h2>
+            <div
+              class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500"
+            >
+              <!-- Team Icon -->
+              <svg
+                class="w-16 h-16 text-yellow-500 animate-pulse"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M17 20h5v-2a4 4 0 00-3-3.87M7 20H2v-2a4 4 0 013-3.87M12 14a4 4 0 10-4-4 4 4 0 004 4z"
+                />
+              </svg>
+            </div>
+          </div>
+          <p
+            class="mt-4 text-lg text-gray-300 group-hover:text-white transition duration-500"
+          >
+            Pluridisciplinary Founders
+          </p>
+        </div>
 
-      <div class="text-center">
-        <h2
-          class="font-semibold text-xl sm:text-2xl md:text-4xl text-heading-1"
-        >
-          5+
-        </h2>
-        <p class="mt-2 text-heading-3">Years</p>
+        <!-- Stat Item 4 -->
+        <div class="text-center group">
+          <div class="relative inline-block">
+            <h2
+              class="font-bold text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-br from-teal-400 to-green-500 group-hover:from-green-500 group-hover:to-teal-400 transition duration-500"
+            >
+              <span class="counter" data-target="2024">0</span>
+            </h2>
+            <div
+              class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500"
+            >
+              <!-- Calendar Icon -->
+              <svg
+                class="w-16 h-16 text-teal-500 animate-pulse"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M8 7V3m8 4V3M3 11h18M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"
+                />
+              </svg>
+            </div>
+          </div>
+          <p
+            class="mt-4 text-lg text-gray-300 group-hover:text-white transition duration-500"
+          >
+            Founded in
+          </p>
+        </div>
       </div>
     </div>
   </Container>
+
+  <!-- Include JavaScript for interactivity -->
+  <script>
+    // Animated background using Canvas
+    const canvas = document.getElementById('backgroundCanvas');
+    const ctx = canvas.getContext('2d');
+    let particlesArray;
+
+    function initCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      particlesArray = [];
+      const numberOfParticles = 100;
+      for (let i = 0; i < numberOfParticles; i++) {
+        particlesArray.push(new Particle());
+      }
+    }
+
+    function Particle() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 3 + 1;
+      this.speedX = Math.random() * 1 - 0.5;
+      this.speedY = Math.random() * 1 - 0.5;
+    }
+
+    Particle.prototype.update = function () {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+      if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+    };
+
+    Particle.prototype.draw = function () {
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    };
+
+    function handleParticles() {
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+        for (let j = i; j < particlesArray.length; j++) {
+          const dx = particlesArray[i].x - particlesArray[j].x;
+          const dy = particlesArray[i].y - particlesArray[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < 100) {
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+            ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      handleParticles();
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('load', () => {
+      initCanvas();
+      animate();
+    });
+
+    window.addEventListener('resize', () => {
+      initCanvas();
+    });
+
+    // Counter Animation
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach((counter) => {
+      counter.innerText = '0';
+      const updateCounter = () => {
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText;
+        const increment = target / 200;
+
+        if (count < target) {
+          counter.innerText = `${Math.ceil(count + increment)}`;
+          setTimeout(updateCounter, 10);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      updateCounter();
+    });
+  </script>
 </section>
