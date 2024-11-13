@@ -3,70 +3,123 @@ import Button from "../shared/Button.astro";
 import Container from "../shared/Container.astro";
 import Paragraph from "../shared/Paragraph.astro";
 import ByNumber from "./ByNumber.astro";
-// Remove the import of THREE from the frontmatter
 ---
-<section class="relative pt-32 lg:pt-36 overflow-hidden ">
-  <!-- Background with Blockchain Patterns -->
-  <div class="absolute inset-0 -z-20">
-    <!-- Canvas for background patterns -->
-    <canvas id="backgroundCanvas" class="w-full h-full"></canvas>
-  </div>
+<style>
+  /* Custom styles for the hero section */
+  .hero-section {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    transition: background-color 0.3s, color 0.3s;
+  }
 
-  <Container class="flex flex-col sm:flex-row items-center lg:items-start gap-10 lg:gap-12 relative z-10 bg-black">
+ 
+
+  @keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .crypto-card {
+    background-color: var(--color-card-bg);
+    color: var(--color-card-text);
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Theme variables */
+  
+</style>
+
+<section class="hero-section hero-background relative pt-32 lg:pt-36 overflow-hidden">
+  <!-- Background Particles -->
+  <div id="particles-js" class="absolute inset-0 -z-10"></div>
+
+  <Container class="flex flex-col lg:flex-row items-center lg:items-start gap-10 lg:gap-12 relative z-10">
     <!-- Left Column: Content -->
     <div class="flex flex-col items-center text-center lg:text-left lg:items-start lg:flex-1 lg:w-1/2">
       <!-- Headline with Fixed Height -->
-      <h1 class="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 animate-gradient" style="min-height: 200px;">
+      <h1
+        class="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-extrabold"
+        style="min-height: 200px; color: var(--color-text);"
+      >
         <span id="typedText" class="block"></span>
       </h1>
       <!-- Paragraph -->
-      <Paragraph class="mt-8 text-lg md:text-xl text-gray-200">
+      <Paragraph class="mt-8 text-lg md:text-xl">
         Empowering your business with cutting-edge blockchain solutions. Join us in revolutionizing the future of technology.
       </Paragraph>
+      <!-- Binance Crypto Price Tracker -->
+      <div id="crypto-prices" class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+        <!-- Price cards will be injected here -->
+      </div>
       <!-- Call to Action Form -->
       <div class="mt-10 w-full max-w-md">
         <form id="emailForm" action="#" class="relative">
-          <div class="flex items-center bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-full pl-6 pr-1 py-1 shadow-lg">
+          <div class="flex items-center bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-full pl-6 pr-1 py-1 shadow-lg">
             <span class="text-gray-300">
               <!-- Email Icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 12H8m0 0l4-4m-4 4l4 4" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M16 12H8m0 0l4-4m-4 4l4 4"
+                />
               </svg>
             </span>
-            <input type="email" id="emailInput" placeholder="Enter your email" class="w-full bg-transparent outline-none text-white placeholder-gray-400 pl-4 py-3" required />
+            <input
+              type="email"
+              id="emailInput"
+              placeholder="Enter your email"
+              class="w-full bg-transparent outline-none text-white placeholder-gray-200 pl-4 py-3"
+              required
+            />
             <Button variant="primary" className="min-w-max text-white px-6 py-3 rounded-full">
               Get Started
             </Button>
           </div>
           <!-- Success Message -->
-          <p id="successMessage" class="mt-4 text-green-400 text-sm hidden">Thank you! We'll be in touch soon.</p>
+          <p id="successMessage" class="mt-4 text-green-400 text-sm hidden">
+            Thank you! We'll be in touch soon.
+          </p>
         </form>
       </div>
-      
     </div>
 
-    <!-- Right Column: 3D Blockchain Globe -->
+    <!-- Right Column: Globe -->
     <div class="flex flex-1 lg:w-1/2 lg:h-auto relative max-w-3xl">
-        <!-- Canvas for 3D Globe -->
-        <canvas id="globeCanvas" class="w-full h-full"></canvas>
-      </div>
+      <!-- Div for Globe -->
+      <div id="globeViz" class="w-50 h-50"></div>
+    </div>
   </Container>
 
-  <!-- Include three.js via CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Include globe.gl, topojson, and particles.js via CDN -->
+  <script src="https://unpkg.com/globe.gl"></script>
+  <script src="https://unpkg.com/topojson@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
   <!-- Include the script within a <script> tag -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener("DOMContentLoaded", () => {
       // Animated Headline Typing Effect without layout shifts
-      const typedText = document.getElementById('typedText');
-      const phrases = ["Innovating Blockchain.", "Securing Your Future.", "Transforming Technology."];
+      const typedText = document.getElementById("typedText");
+      const phrases = [
+        "Innovating Blockchain.",
+        "Securing Your Future.",
+        "Transforming Technology.",
+      ];
       let currentPhraseIndex = 0;
       let charIndex = 0;
       let isDeleting = false;
 
       // Prevent layout shifts by setting a fixed height
-      typedText.style.minHeight = '0.8em';
+      typedText.style.minHeight = "0.8em";
 
       function type() {
         const currentPhrase = phrases[currentPhraseIndex];
@@ -92,107 +145,195 @@ import ByNumber from "./ByNumber.astro";
 
       type();
 
-      // 3D Blockchain Globe Animation
-      let scene, camera, renderer, globeGroup;
-      const globeCanvas = document.getElementById('globeCanvas');
-
-      function initGlobe() {
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(50, globeCanvas.offsetWidth / globeCanvas.offsetHeight, 0.1, 1000);
-        camera.position.z = 2;
-
-        renderer = new THREE.WebGLRenderer({ canvas: globeCanvas, alpha: true });
-        renderer.setSize(globeCanvas.offsetWidth, globeCanvas.offsetHeight);
-
-        // Globe Group
-        globeGroup = new THREE.Group();
-
-        // Globe Geometry
-        const globeGeometry = new THREE.SphereGeometry(0.8, 32, 32);
-        const globeMaterial = new THREE.MeshBasicMaterial({ color: 0x222222, wireframe: true });
-        const globeMesh = new THREE.Mesh(globeGeometry, globeMaterial);
-        globeGroup.add(globeMesh);
-
-        // Adding Blockchain Nodes
-        const nodeGeometry = new THREE.SphereGeometry(0.02, 8, 8);
-        const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0080 });
-        for (let i = 0; i < 100; i++) {
-          const nodeMesh = new THREE.Mesh(nodeGeometry, nodeMaterial);
-          const phi = Math.acos(-1 + (2 * i) / 100);
-          const theta = Math.sqrt(100 * Math.PI) * phi;
-
-          nodeMesh.position.x = 0.8 * Math.cos(theta) * Math.sin(phi);
-          nodeMesh.position.y = 0.8 * Math.sin(theta) * Math.sin(phi);
-          nodeMesh.position.z = 0.8 * Math.cos(phi);
-
-          globeGroup.add(nodeMesh);
-        }
-
-        scene.add(globeGroup);
-
-        animateGlobe();
-      }
-
-      function animateGlobe() {
-        requestAnimationFrame(animateGlobe);
-        globeGroup.rotation.y += 0.001;
-        renderer.render(scene, camera);
-      }
-
-      initGlobe();
-
-      // Handle Window Resize
-      window.addEventListener('resize', () => {
-        camera.aspect = globeCanvas.offsetWidth / globeCanvas.offsetHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(globeCanvas.offsetWidth, globeCanvas.offsetHeight);
-      });
-
-      // Background Animation with Blockchain Patterns
-      const backgroundCanvas = document.getElementById('backgroundCanvas');
-      const bgCtx = backgroundCanvas.getContext('2d');
-
-      function resizeBackgroundCanvas() {
-        backgroundCanvas.width = backgroundCanvas.offsetWidth;
-        backgroundCanvas.height = backgroundCanvas.offsetHeight;
-      }
-
-      function drawBackgroundPattern() {
-        resizeBackgroundCanvas();
-        bgCtx.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
-        bgCtx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-        const size = 40;
-        for (let x = 0; x < backgroundCanvas.width; x += size) {
-          for (let y = 0; y < backgroundCanvas.height; y += size) {
-            bgCtx.beginPath();
-            bgCtx.moveTo(x + size / 2, y);
-            bgCtx.lineTo(x + size, y + size / 4);
-            bgCtx.lineTo(x + size, y + (3 * size) / 4);
-            bgCtx.lineTo(x + size / 2, y + size);
-            bgCtx.lineTo(x, y + (3 * size) / 4);
-            bgCtx.lineTo(x, y + size / 4);
-            bgCtx.closePath();
-            bgCtx.stroke();
-          }
-        }
-      }
-
-      window.addEventListener('resize', drawBackgroundPattern);
-      drawBackgroundPattern();
-
       // Email Form Validation and Animation
-      const emailForm = document.getElementById('emailForm');
-      const emailInput = document.getElementById('emailInput');
-      const successMessage = document.getElementById('successMessage');
+      const emailForm = document.getElementById("emailForm");
+      const emailInput = document.getElementById("emailInput");
+      const successMessage = document.getElementById("successMessage");
 
-      emailForm.addEventListener('submit', (e) => {
+      emailForm.addEventListener("submit", (e) => {
         e.preventDefault();
         if (emailInput.validity.valid) {
-          successMessage.classList.remove('hidden');
+          successMessage.classList.remove("hidden");
           emailForm.reset();
         } else {
           emailInput.focus();
         }
+      });
+
+      // 3D Globe using globe.gl
+      const globeContainer = document.getElementById('globeViz');
+
+      const globe = Globe()(globeContainer)
+        .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
+        .backgroundColor('rgba(0,0,0,0)');
+
+      // Auto-rotate
+      globe.controls().autoRotate = true;
+      globe.controls().autoRotateSpeed = 0.15;
+
+      // Load country polygons and highlight Morocco
+      fetch('https://unpkg.com/world-atlas@1/world/110m.json')
+        .then(res => res.json())
+        .then(worldData => {
+          const countries = topojson.feature(worldData, worldData.objects.countries).features;
+
+          // Find Morocco
+          const morocco = countries.find(
+            (d) =>
+              d.properties.name === 'Morocco' ||
+              d.properties.ADMIN === 'Morocco' ||
+              d.properties.NAME === 'Morocco'
+          );
+
+          globe
+            .polygonsData(countries)
+            .polygonCapColor((d) =>
+              d === morocco ? '#FF0000' : 'rgba(200, 200, 200, 0.6)'
+            )
+            .polygonSideColor(() => 'rgba(0, 66, 89, 0.5)')
+            .polygonStrokeColor(() => '#111')
+            .polygonAltitude((d) => (d === morocco ? 0.06 : 0.01))
+            .polygonsTransitionDuration(300);
+        });
+
+      // Handle Window Resize
+      window.addEventListener('resize', () => {
+        globe.width([globeContainer.offsetWidth]);
+        globe.height([globeContainer.offsetHeight]);
+      });
+
+      // Binance Live Crypto Tracker
+      const symbols = ["btcusdt", "ethusdt", "bnbusdt", "adausdt", "xrpusdt"]; // Add desired symbols
+      const container = document.getElementById("crypto-prices");
+
+      // Initialize WebSocket
+      const ws = new WebSocket(
+        `wss://stream.binance.com:9443/stream?streams=${symbols
+          .map((s) => `${s}@ticker`)
+          .join("/")}`
+      );
+
+      ws.onmessage = (event) => {
+        const message = JSON.parse(event.data);
+        const data = message.data;
+        updatePrice(data);
+      };
+
+      function updatePrice(data) {
+        const symbol = data.s.toUpperCase();
+        const price = parseFloat(data.c).toFixed(2);
+        let priceItem = document.getElementById(`price-${data.s}`);
+        if (priceItem) {
+          // Update existing price
+          priceItem.querySelector(".price").textContent = price;
+        } else {
+          // Create new price card
+          const item = document.createElement("div");
+          item.classList.add(
+            "crypto-card",
+            "flex",
+            "items-center",
+            "space-x-4",
+            "p-4",
+            "rounded-lg",
+            "shadow-lg"
+          );
+          item.id = `price-${data.s}`;
+          item.innerHTML = `
+            <div class="flex items-center">
+              <img src="/images/icons/${symbol.toLowerCase()}.svg" alt="${symbol}" class="w-8 h-8 mr-2" />
+              <span class="symbol font-bold text-xl">${symbol}</span>
+            </div>
+            <div class="price text-2xl font-semibold">${price}</div>
+          `;
+          container.appendChild(item);
+        }
+      }
+
+      // Handle WebSocket errors
+      ws.onerror = (error) => {
+        console.error("WebSocket Error:", error);
+      };
+
+      // Handle WebSocket closure
+      ws.onclose = () => {
+        console.log("WebSocket connection closed");
+      };
+
+      // Initialize particles.js for background animation
+      particlesJS("particles-js", {
+        "particles": {
+          "number": {
+            "value": 80,
+            "density": {
+              "enable": true,
+              "value_area": 800
+            }
+          },
+          "color": {
+            "value": "#ffffff"
+          },
+          "shape": {
+            "type": "circle",
+            "stroke": {
+              "width": 0,
+              "color": "#000000"
+            },
+            "polygon": {
+              "nb_sides": 5
+            }
+          },
+          "opacity": {
+            "value": 0.5,
+            "random": false,
+            "anim": {
+              "enable": false
+            }
+          },
+          "size": {
+            "value": 3,
+            "random": true,
+            "anim": {
+              "enable": false
+            }
+          },
+          "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": "#ffffff",
+            "opacity": 0.3,
+            "width": 1
+          },
+          "move": {
+            "enable": true,
+            "speed": 2,
+            "direction": "none",
+            "random": false,
+            "straight": false,
+            "out_mode": "out"
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": {
+              "enable": true,
+              "mode": "grab"
+            },
+            "onclick": {
+              "enable": false
+            }
+          },
+          "modes": {
+            "grab": {
+              "distance": 200,
+              "line_linked": {
+                "opacity": 0.5
+              }
+            }
+          }
+        },
+        "retina_detect": true
       });
     });
   </script>

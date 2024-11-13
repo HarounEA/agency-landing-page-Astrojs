@@ -1,24 +1,74 @@
 ---
 import Container from "../shared/Container.astro";
 import Title from "../shared/Title.astro";
-
 ---
 
 <section>
-    <Container className="space-y-8">
-        <div class="text-center max-w-3xl mx-auto">
-            <Title>
-                In collaboration with
-            </Title>
-        </div>
-        <div class="flex justify-center flex-wrap gap-4">
-            <div class="p-4 sm:p-5 rounded-xl bg-body border border-box-border group">
-                <img src="/logos/um6p.png" width="450" height="500" alt="ss" class="h-7 sm:h-10 w-auto ease-linear duration-300 grayscale group-hover:!grayscale-0 group-hover:scale-105">
-            </div>
-            <div class="p-4 sm:p-5 rounded-xl bg-body border border-box-border group">
-                <img src="/logos/UM6P_wordmark_.svg" width="1000" height="600"alt="dd" class="h-7 sm:h-10 w-auto ease-linear duration-300 grayscale group-hover:!grayscale-0 group-hover:scale-105">
-            </div>
-            
-        </div>
-    </Container>
+  <Container className="space-y-8">
+    <div class="text-center max-w-3xl mx-auto">
+      <Title>In collaboration with</Title>
+    </div>
+    <div class="flex justify-center flex-wrap gap-8">
+      <!-- First Icon -->
+      <div class="p-6 sm:p-8 rounded-xl bg-body border border-box-border group hover:shadow-xl transition-shadow duration-300 grayscale hover:!grayscale-0">
+        <a href="#" class="block">
+          <img
+            src="/logos/um6p-preview.png"
+            width="450"
+            height="500"
+            alt="UM6P Logo"
+            class="h-24 sm:h-32 w-auto mx-auto ease-linear duration-300 transform group-hover:scale-110"
+          />
+        </a>
+      </div>
+      <!-- Second Icon -->
+      <div class="p-6 sm:p-8 rounded-xl bg-body border border-box-border group hover:shadow-xl transition-shadow duration-300 grayscale hover:!grayscale-0">
+        <a href="#" class="block">
+          <img
+            src="/logos/UM6P_wordmark_.svg"
+            width="1000"
+            height="600"
+            alt="UM6P Wordmark"
+            class="h-24 sm:h-32 w-auto mx-auto ease-linear duration-300 transform group-hover:scale-110"
+          />
+        </a>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<!-- New Team Section -->
+<section class="mt-16">
+  <Container className="space-y-12">
+    <div class="text-center max-w-3xl mx-auto">
+      <Title>Meet Our Founders</Title>
+    </div>
+    <div class="flex flex-col md:flex-row justify-center flex-wrap gap-8">
+      <!-- Founder 1 -->
+      <div class="flex-1 p-6 sm:p-8 rounded-xl bg-body border border-box-border text-center md:text-left">
+        <h3 class="text-2xl font-bold mb-2">Youssef Benlemlih</h3>
+        <p class="text-primary font-semibold">Founder & CEO</p>
+        <p class="mt-4 text-gray-600">
+          As a former investment banker with a PhD in Blockchain, Youssef leads BlocReg Solutions by driving strategy and building partnerships. All of our services are deeply backed by strong research, including three articles he has presented and published with his co-founders in reputable journals and conferences.
+        </p>
+      </div>
+      <!-- Founder 2 -->
+      <div class="flex-1 p-6 sm:p-8 rounded-xl bg-body border border-box-border text-center md:text-left">
+        <h3 class="text-2xl font-bold mb-2">El Aouad Haroun</h3>
+        <p class="text-primary font-semibold">Co-Founder, CTO & Lead Engineer</p>
+        <p class="mt-4 text-gray-600">
+          A highly skilled software engineer, El Aouad is responsible for developing secure, scalable blockchain platforms, ensuring the technical backbone of our solutions is strong and efficient.
+        </p>
+      </div>
+      
+      <!-- Founder 3 -->
+      <div class="flex-1 p-6 sm:p-8 rounded-xl bg-body border border-box-border text-center md:text-left">
+        <h3 class="text-2xl font-bold mb-2">Pr. Berrada Ismail</h3>
+        <p class="text-primary font-semibold">Co-Founder, Head of R&D and HR</p>
+        <p class="mt-4 text-gray-600">
+          An Associate Professor at UM6P, Pr. Berrada ensures our solutions are built on cutting-edge research, bringing academic rigor and innovation to our services.
+        </p>
+      </div>
+    </div>
+  </Container>
 </section>
