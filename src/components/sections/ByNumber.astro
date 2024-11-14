@@ -12,7 +12,7 @@ import { onMount } from 'solid-js';
 
     <!-- Statistics Section -->
     <div
-      class="mx-auto lg:mx-0 p-8 sm:p-10 py-10 sm:py-12 max-w-5xl rounded-3xl bg-gradient-to-br from-blue-900 via-gray-900 to-black border border-gray-700 shadow-2xl relative overflow-hidden"
+      class="mx-auto lg:mx-0 p-8 sm:p-10 py-8 items-center  max-w-5xl max-h-48 rounded-3xl bg-gradient-to-br from-primary via-gray-900 to-black border border-gray-200 shadow-2xl relative overflow-hidden"
     >
       <!-- Stats Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
@@ -46,7 +46,7 @@ import { onMount } from 'solid-js';
           <p
             class="mt-4 text-lg text-gray-300 group-hover:text-white transition duration-500"
           >
-            Published Articles on Blockchain Regulation
+          Published Scopus-Indexed Articles
           </p>
         </div>
 
@@ -56,7 +56,7 @@ import { onMount } from 'solid-js';
             <h2
               class="font-bold text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-br from-purple-400 to-pink-500 group-hover:from-pink-500 group-hover:to-purple-400 transition duration-500"
             >
-              <span class="counter" data-target="1">0</span><sup>st</sup>
+              <span class="counter" data-target="100">%</span><sup>%</sup>
             </h2>
             <div
               class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500"
@@ -90,7 +90,7 @@ import { onMount } from 'solid-js';
             <h2
               class="font-bold text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-br from-yellow-400 to-red-500 group-hover:from-red-500 group-hover:to-yellow-400 transition duration-500"
             >
-              <span class="counter" data-target="3">0</span>
+              <span class="counter" data-target="2">0</span>
             </h2>
             <div
               class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500"
@@ -114,7 +114,7 @@ import { onMount } from 'solid-js';
           <p
             class="mt-4 text-lg text-gray-300 group-hover:text-white transition duration-500"
           >
-            Pluridisciplinary Founders
+          Key Strategic Collaborations
           </p>
         </div>
 
@@ -148,7 +148,7 @@ import { onMount } from 'solid-js';
           <p
             class="mt-4 text-lg text-gray-300 group-hover:text-white transition duration-500"
           >
-            Founded in
+            Founded in 
           </p>
         </div>
       </div>
@@ -186,9 +186,9 @@ import { onMount } from 'solid-js';
       if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
       if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
     };
-
+    
     Particle.prototype.draw = function () {
-      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fillStyle = 'rgba(0, 66, 89,0.7)';
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
       ctx.fill();
@@ -203,7 +203,7 @@ import { onMount } from 'solid-js';
           const dy = particlesArray[i].y - particlesArray[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           if (distance < 100) {
-            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.strokeStyle = 'rgba(0, 66, 89,0.1)';
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particlesArray[i].x, particlesArray[i].y);

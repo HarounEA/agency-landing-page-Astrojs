@@ -6,11 +6,7 @@ import ByNumber from "./ByNumber.astro";
 ---
 <style>
   /* Custom styles for the hero section */
-  .hero-section {
-    background-color: var(--color-bg);
-    color: var(--color-text);
-    transition: background-color 0.3s, color 0.3s;
-  }
+  
 
  
 
@@ -39,15 +35,16 @@ import ByNumber from "./ByNumber.astro";
     <div class="flex flex-col items-center text-center lg:text-left lg:items-start lg:flex-1 lg:w-1/2">
       <!-- Headline with Fixed Height -->
       <h1
-        class="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-extrabold"
-        style="min-height: 200px; color: var(--color-text);"
+        class="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-red-600 from-10% via-primary via-35% to-green-200"
+        style="min-height: 300px; color:  linear-gradient(to right, linear-gradient(to right, rgba(0, 66, 89, 1));"
       >
-        <span id="typedText" class="block"></span>
+      <span id="typedText" class="block"></span>
       </h1>
       <!-- Paragraph -->
       <Paragraph class="mt-8 text-lg md:text-xl">
-        Empowering your business with cutting-edge blockchain solutions. Join us in revolutionizing the future of technology.
+        Empowering your business with cutting-edge blockchain solutions. Join us in revolutionizing the future of finance.
       </Paragraph>
+      
       <!-- Binance Crypto Price Tracker -->
       <div id="crypto-prices" class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
         <!-- Price cards will be injected here -->
@@ -95,7 +92,13 @@ import ByNumber from "./ByNumber.astro";
     <!-- Right Column: Globe -->
     <div class="flex flex-1 lg:w-1/2 lg:h-auto relative max-w-3xl">
       <!-- Div for Globe -->
-      <div id="globeViz" class="w-50 h-50"></div>
+      <!-- <div id="globeViz" class="w-50 h-50"></div> -->
+    </div>
+
+    <div>
+      <ByNumber>
+        
+      </ByNumber>
     </div>
   </Container>
 
@@ -110,9 +113,9 @@ import ByNumber from "./ByNumber.astro";
       // Animated Headline Typing Effect without layout shifts
       const typedText = document.getElementById("typedText");
       const phrases = [
-        "Innovating Blockchain.",
-        "Securing Your Future.",
-        "Transforming Technology.",
+        "Innovating Digital Services",
+        "Implementing Blockchain Solutions",
+        "Adapting Financial Regulations",
       ];
       let currentPhraseIndex = 0;
       let charIndex = 0;
@@ -241,8 +244,8 @@ import ByNumber from "./ByNumber.astro";
           item.id = `price-${data.s}`;
           item.innerHTML = `
             <div class="flex items-center">
-              <img src="/images/icons/${symbol.toLowerCase()}.svg" alt="${symbol}" class="w-8 h-8 mr-2" />
-              <span class="symbol font-bold text-xl">${symbol}</span>
+              <img src="/icons/${symbol.toLowerCase()}.svg" alt="${symbol}" class="w-8 h-8 mr-2" />
+              <span class="symbol color: "#004259" font-bold text-xl">${symbol}</span>
             </div>
             <div class="price text-2xl font-semibold">${price}</div>
           `;
