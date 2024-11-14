@@ -32,12 +32,14 @@ import ByNumber from "./ByNumber.astro";
 
   <Container class="flex flex-col lg:flex-row items-center lg:items-start gap-10 lg:gap-12 relative z-10">
     <!-- Left Column: Content -->
+     
     <div class="flex flex-col items-center text-center lg:text-left lg:items-start lg:flex-1 lg:w-1/2">
       <!-- Headline with Fixed Height -->
       <h1
         class="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-red-600 from-10% via-primary via-35% to-green-200"
         style="min-height: 300px; color:  linear-gradient(to right, linear-gradient(to right, rgba(0, 66, 89, 1));"
       >
+       
       <span id="typedText" class="block"></span>
       </h1>
       <!-- Paragraph -->
@@ -88,7 +90,7 @@ import ByNumber from "./ByNumber.astro";
         </form>
       </div>
     </div>
-
+    
     <!-- Right Column: Globe -->
     <div class="flex flex-1 lg:w-1/2 lg:h-auto relative max-w-3xl">
       <!-- Div for Globe -->
@@ -97,7 +99,7 @@ import ByNumber from "./ByNumber.astro";
 
     <div>
       <ByNumber>
-        
+
       </ByNumber>
     </div>
   </Container>
@@ -338,6 +340,75 @@ import ByNumber from "./ByNumber.astro";
         },
         "retina_detect": true
       });
+    });
+  </script>
+   <script>
+    // Simple blockchain network animation using Canvas API
+    const canvas = document.getElementById('blockchainCanvas');
+    const ctx = canvas.getContext('2d');
+    let nodes = [];
+
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+
+    function createNodes() {
+      nodes = [];
+      for (let i = 0; i < 50; i++) {
+        nodes.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 2 + 1,
+          speedX: Math.random() * 0.5 - 0.25,
+          speedY: Math.random() * 0.5 - 0.25,
+        });
+      }
+    }
+
+    function drawNodes() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#ffffff';
+      nodes.forEach(node => {
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.size, 0, Math.PI * 2);
+        ctx.fill();
+        node.x += node.speedX;
+        node.y += node.speedY;
+        if (node.x < 0 || node.x > canvas.width) node.speedX *= -1;
+        if (node.y < 0 || node.y > canvas.height) node.speedY *= -1;
+      });
+      connectNodes();
+      requestAnimationFrame(drawNodes);
+    }
+
+    function connectNodes() {
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < 100) {
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    window.addEventListener('load', () => {
+      resizeCanvas();
+      createNodes();
+      drawNodes();
+    });
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      createNodes();
     });
   </script>
 </section>
