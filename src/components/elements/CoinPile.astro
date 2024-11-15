@@ -1,0 +1,84 @@
+---
+// CoinPile2.astro
+
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
+
+---
+
+<div id="coin-pile-hover" class="w-full h-96"></div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x000000);
+
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 5;
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.getElementById('coin-pile-hover').appendChild(renderer.domElement);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+
+  const coinGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.1, 32);
+  const coinMaterial = new THREE.MeshStandardMaterial({
+    color: 0x888888,
+    metalness: 0.8,
+    roughness: 0.3,
+  });
+
+  const numCoins = 50;
+  const coins = new THREE.InstancedMesh(coinGeometry, coinMaterial, numCoins);
+
+  for (let i = 0; i < numCoins; i++) {
+    const matrix = new THREE.Matrix4();
+    const position = new THREE.Vector3((Math.random() - 0.5) * 3, (Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 3);
+    const rotation = new THREE.Euler(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+    matrix.compose(position, new THREE.Quaternion().setFromEuler(rotation), new THREE.Vector3(1, 1, 1));
+    coins.setMatrixAt(i, matrix);
+  }
+  scene.add(coins);
+
+  const light = new THREE.DirectionalLight(0xffffff, 0.6);
+  light.position.set(5, 5, 5);
+  scene.add(light);
+
+  let mouseX = 0;
+  let mouseY = 0;
+  document.addEventListener('mousemove', (event) => {
+    mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    for (let i = 0; i < numCoins; i++) {
+      const matrix = new THREE.Matrix4();
+      coins.getMatrixAt(i, matrix);
+
+      const position = new THREE.Vector3();
+      const rotation = new THREE.Quaternion();
+      const scale = new THREE.Vector3();
+      matrix.decompose(position, rotation, scale);
+
+      const euler = new THREE.Euler(
+        Math.sin(mouseY * Math.PI) * 0.05,
+        Math.sin(mouseX * Math.PI) * 0.05,
+        rotation.z
+      );
+      rotation.setFromEuler(euler);
+      matrix.compose(position, rotation, scale);
+      coins.setMatrixAt(i, matrix);
+    }
+    coins.instanceMatrix.needsUpdate = true;
+
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  animate();
+});
+</script>

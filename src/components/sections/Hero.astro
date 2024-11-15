@@ -28,7 +28,7 @@ import ByNumber from "./ByNumber.astro";
 
 <section class="hero-section hero-background relative pt-32 lg:pt-36 overflow-hidden">
   <!-- Background Particles -->
-  <div id="particles-js" class="absolute inset-0 -z-10"></div>
+  <div id="blockchainBackground" class="absolute inset-0 -z-10"></div>
 
   <Container class="flex flex-col lg:flex-row items-center lg:items-start gap-10 lg:gap-12 relative z-10">
     <!-- Left Column: Content -->
@@ -108,7 +108,7 @@ import ByNumber from "./ByNumber.astro";
   <script src="https://unpkg.com/globe.gl"></script>
   <script src="https://unpkg.com/topojson@3"></script>
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r79/three.min.js"></script>
   <!-- Include the script within a <script> tag -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -411,4 +411,184 @@ import ByNumber from "./ByNumber.astro";
       createNodes();
     });
   </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x000000);
+
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 5;
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.getElementById('coin-pile-hover').appendChild(renderer.domElement);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+
+  const coinGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.1, 32);
+  const coinMaterial = new THREE.MeshStandardMaterial({
+    color: 0x888888,
+    metalness: 0.8,
+    roughness: 0.3,
+  });
+
+  const numCoins = 50;
+  const coins = new THREE.InstancedMesh(coinGeometry, coinMaterial, numCoins);
+
+  for (let i = 0; i < numCoins; i++) {
+    const matrix = new THREE.Matrix4();
+    const position = new THREE.Vector3((Math.random() - 0.5) * 3, (Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 3);
+    const rotation = new THREE.Euler(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+    matrix.compose(position, new THREE.Quaternion().setFromEuler(rotation), new THREE.Vector3(1, 1, 1));
+    coins.setMatrixAt(i, matrix);
+  }
+  scene.add(coins);
+
+  const light = new THREE.DirectionalLight(0xffffff, 0.6);
+  light.position.set(5, 5, 5);
+  scene.add(light);
+
+  let mouseX = 0;
+  let mouseY = 0;
+  document.addEventListener('mousemove', (event) => {
+    mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    for (let i = 0; i < numCoins; i++) {
+      const matrix = new THREE.Matrix4();
+      coins.getMatrixAt(i, matrix);
+
+      const position = new THREE.Vector3();
+      const rotation = new THREE.Quaternion();
+      const scale = new THREE.Vector3();
+      matrix.decompose(position, rotation, scale);
+
+      const euler = new THREE.Euler(
+        Math.sin(mouseY * Math.PI) * 0.05,
+        Math.sin(mouseX * Math.PI) * 0.05,
+        rotation.z
+      );
+      rotation.setFromEuler(euler);
+      matrix.compose(position, rotation, scale);
+      coins.setMatrixAt(i, matrix);
+    }
+    coins.instanceMatrix.needsUpdate = true;
+
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  animate();
+});
+</script>
+
+<script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set up scene, camera, and renderer
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 5;
+    
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.getElementById('blockchainBackground').appendChild(renderer.domElement);
+    
+      // Orbit Controls for subtle camera movement (optional)
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.enableZoom = false;
+    
+      // Tailwind primary color for mesh material
+      const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--tw-color-primary').trim() || '#00BCD4';
+    
+      // Blockchain mesh configuration
+      const numNodes = 50;
+      const nodeGeometry = new THREE.SphereGeometry(0.05, 16, 16);
+      const nodeMaterial = new THREE.MeshStandardMaterial({ color: primaryColor, emissive: primaryColor, emissiveIntensity: 0.5 });
+    
+      const nodes = [];
+      const lines = new THREE.Group();
+    
+      // Create nodes and add them to the scene
+      for (let i = 0; i < numNodes; i++) {
+        const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+        node.position.set(
+          (Math.random() - 0.5) * 10,
+          (Math.random() - 0.5) * 5,
+          (Math.random() - 0.5) * 5
+        );
+        nodes.push(node);
+        scene.add(node);
+    
+        // Create connecting lines between nodes
+        nodes.forEach((otherNode) => {
+          const distance = node.position.distanceTo(otherNode.position);
+          if (distance < 2) {
+            const lineGeometry = new THREE.BufferGeometry().setFromPoints([node.position, otherNode.position]);
+            const lineMaterial = new THREE.LineBasicMaterial({ color: primaryColor, opacity: 0.2, transparent: true });
+            const line = new THREE.Line(lineGeometry, lineMaterial);
+            lines.add(line);
+          }
+        });
+      }
+      scene.add(lines);
+    
+      // Hover Interactivity: Scale nodes slightly on hover
+      document.addEventListener('mousemove', (event) => {
+        const mouse = new THREE.Vector2(
+          (event.clientX / window.innerWidth) * 2 - 1,
+          -(event.clientY / window.innerHeight) * 2 + 1
+        );
+    
+        // Raycaster for hover effect
+        const raycaster = new THREE.Raycaster();
+        raycaster.setFromCamera(mouse, camera);
+    
+        const intersects = raycaster.intersectObjects(nodes);
+        nodes.forEach((node) => node.scale.set(1, 1, 1)); // Reset scale
+        if (intersects.length > 0) {
+          intersects[0].object.scale.set(1.5, 1.5, 1.5); // Scale hovered node
+        }
+      });
+    
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+      const pointLight = new THREE.PointLight(primaryColor, 1, 50);
+      pointLight.position.set(0, 0, 5);
+      scene.add(ambientLight, pointLight);
+    
+      // Animate the background
+      function animate() {
+        requestAnimationFrame(animate);
+    
+        // Rotate the group of lines and nodes for subtle animation
+        lines.rotation.y += 0.001;
+        nodes.forEach((node, i) => {
+          node.position.x += Math.sin(Date.now() * 0.001 + i) * 0.001;
+          node.position.y += Math.cos(Date.now() * 0.001 + i) * 0.001;
+        });
+    
+        controls.update();
+        renderer.render(scene, camera);
+      }
+    
+      animate();
+    
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    });
+    </script>
+    
+
 </section>
