@@ -7,9 +7,12 @@ import Features from '../components/sections/Features.astro';
 import CTA from '../components/sections/CTA.astro';
 import Brands from '../components/sections/Brands.astro';
 ---
+<!-- Add Particle.js CDN -->
+
 
 <Layout title="Welcome to BlocReg Solutions">
 	<main class="flex flex-col gap-y-20 md:gap-y-32 overflow-hidden">
+		
 		<Hero/>
 		<Brands/>
 		<Services/>
@@ -17,4 +20,127 @@ import Brands from '../components/sections/Brands.astro';
 		<Features/>
 		<CTA/>
 	</main>
+	<script src="https://cdn.jsdelivr.net/npm/tsparticles@2.5.3/tsparticles.bundle.min.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+		  tsParticles.load("particles-js", {
+			autoPlay: true,
+			background: {
+			  color: {
+				value: "#ffffff"
+			  },
+			  image: "url('https://particles.js.org/images/background3.jpg')",
+			  position: "50% 50%",
+			  repeat: "no-repeat",
+			  size: "cover",
+			  opacity: 1
+			},
+			backgroundMask: {
+			  composite: "destination-out",
+			  cover: {
+				color: {
+				  value: {
+					r: 255,
+					g: 255,
+					b: 255
+				  }
+				},
+				opacity: 1
+			  },
+			  enable: true
+			},
+			clear: true,
+			fullScreen: {
+			  enable: true,
+			  zIndex: 0
+			},
+			detectRetina: true,
+			fpsLimit: 120,
+			interactivity: {
+			  detectsOn: "window",
+			  events: {
+				onClick: {
+				  enable: true,
+				  mode: "push"
+				},
+				onHover: {
+				  enable: true,
+				  mode: "bubble"
+				},
+				resize: {
+				  enable: true
+				}
+			  },
+			  modes: {
+				bubble: {
+				  distance: 400,
+				  duration: 2,
+				  size: 100,
+				  opacity: 1
+				},
+				connect: {
+				  distance: 80,
+				  links: {
+					opacity: 0.5
+				  },
+				  radius: 60
+				},
+				grab: {
+				  distance: 100,
+				  links: {
+					opacity: 1
+				  }
+				},
+				push: {
+				  quantity: 4
+				},
+				repulse: {
+				  distance: 200,
+				  duration: 0.4
+				}
+			  }
+			},
+			particles: {
+			  color: {
+				value: "#ffffff"
+			  },
+			  links: {
+				color: {
+				  value: "#ffffff"
+				},
+				distance: 150,
+				enable: true,
+				opacity: 1,
+				width: 1
+			  },
+			  move: {
+				enable: true,
+				speed: 2
+			  },
+			  number: {
+				density: {
+				  enable: true,
+				  area: 800
+				},
+				value: 80
+			  },
+			  opacity: {
+				value: 1
+			  },
+			  shape: {
+				type: "circle"
+			  },
+			  size: {
+				value: {
+				  min: 1,
+				  max: 30
+				}
+			  }
+			},
+			pauseOnBlur: true,
+			pauseOnOutsideViewport: true
+		  });
+		});
+	  </script>
+	  
 </Layout>
